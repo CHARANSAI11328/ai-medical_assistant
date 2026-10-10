@@ -1,11 +1,8 @@
 import os
 import yaml
+import logging
 from typing import Dict, Any, List, Optional
 from models.base_model import BaseSpecialistModel
-from models.eye_specialist import EyeSpecialistModel
-from models.chest_specialist import ChestSpecialistModel
-from models.fracture_specialist import FractureSpecialistModel
-from models.agriculture_specialist import AgricultureSpecialistModel
 
 class ModelRegistry:
     """
@@ -24,19 +21,41 @@ class ModelRegistry:
         self.configs: Dict[str, Any] = {}
 
         if os.path.exists(config_path):
-            with open(config_path, "r", encoding="utf-8") as f:
-                data = yaml.safe_load(f)
-                self.configs = data.get("models", {})
+            try:
+                with open(config_path, "r", encoding="utf-8") as f:
+                    data = yaml.safe_load(f)
+                    self.configs = data.get("models", {})
+            except Exception as e:
+                logging.error(f"Error reading models config: {e}")
 
-        # Instantiate specialist adapters
+        # Instantiate specialist adapters with fail-safe error handling
         if "eye_specialist" in self.configs:
-            self.specialists["eye"] = EyeSpecialistModel(self.configs["eye_specialist"])
+            try:
+                from models.eye_specialist import EyeSpecialistModel
+                self.specialists["eye"] = EyeSpecialistModel(self.configs["eye_specialist"])
+            except Exception as e:
+                logging.warning(f"Eye specialist init note: {e}")
+
         if "chest_specialist" in self.configs:
-            self.specialists["chest"] = ChestSpecialistModel(self.configs["chest_specialist"])
+            try:
+                from models.chest_specialist import ChestSpecialistModel
+                self.specialists["chest"] = ChestSpecialistModel(self.configs["chest_specialist"])
+            except Exception as e:
+                logging.warning(f"Chest specialist init note: {e}")
+
         if "fracture_specialist" in self.configs:
-            self.specialists["fracture"] = FractureSpecialistModel(self.configs["fracture_specialist"])
+            try:
+                from models.fracture_specialist import FractureSpecialistModel
+                self.specialists["fracture"] = FractureSpecialistModel(self.configs["fracture_specialist"])
+            except Exception as e:
+                logging.warning(f"Fracture specialist init note: {e}")
+
         if "agriculture_specialist" in self.configs:
-            self.specialists["agriculture"] = AgricultureSpecialistModel(self.configs["agriculture_specialist"])
+            try:
+                from models.agriculture_specialist import AgricultureSpecialistModel
+                self.specialists["agriculture"] = AgricultureSpecialistModel(self.configs["agriculture_specialist"])
+            except Exception as e:
+                logging.warning(f"Agriculture specialist init note: {e}")
 
     def get_specialist(self, key: str) -> Optional[BaseSpecialistModel]:
         return self.specialists.get(key.lower())
