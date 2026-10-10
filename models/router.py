@@ -1,7 +1,10 @@
 from typing import Tuple, Optional, Dict, Any
 from PIL import Image
 import numpy as np
-import cv2
+try:
+    import cv2
+except Exception:
+    cv2 = None
 from models.registry import ModelRegistry
 from models.base_model import BaseSpecialistModel
 

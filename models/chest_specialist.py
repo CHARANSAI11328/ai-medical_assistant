@@ -1,7 +1,10 @@
 import os
 from PIL import Image
 import numpy as np
-import cv2
+try:
+    import cv2
+except Exception:
+    cv2 = None
 from typing import Dict, Any
 from models.base_model import BaseSpecialistModel, SpecialistPrediction
 from models.gradcam import overlay_heatmap
