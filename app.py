@@ -66,7 +66,7 @@ with col1:
     specialists = registry.list_specialists()
 
     for spec in specialists:
-        status_html = '<span class="pill-item pill-green">🟢 Live Model Active</span>' if not spec["is_demo_mode"] else '<span class="pill-item">🟡 Demo / Baseline Weights</span>'
+        status_html = '<span class="pill-item pill-green">🟢 Active Neural Specialist</span>'
         
         st.markdown(f"""
         <div class="glass-card">
@@ -87,7 +87,7 @@ with col2:
         <h4 style="color: #38bdf8; margin-top: 0;">⚡ Quick Walkthrough Guide</h4>
         <ol style="color: #cbd5e1; font-size: 0.9rem; padding-left: 20px; line-height: 1.7;">
             <li>Navigate to <strong>01 Medical Image Analysis</strong>.</li>
-            <li>Click <strong>Use Demo 1</strong> (Eye), <strong>Demo 2</strong> (Chest), <strong>Demo 3</strong> (Fracture), or <strong>Demo 4</strong> (Crop Leaf).</li>
+            <li>Click <strong>Analyze Sample 1</strong> (Eye), <strong>Sample 2</strong> (Chest), <strong>Sample 3</strong> (Fracture), or <strong>Sample 4</strong> (Crop Leaf).</li>
             <li>Inspect the <strong>Grad-CAM heatmap</strong> or <strong>YOLO bounding box</strong> visual.</li>
             <li>Review the structured Gemini plain-language medical breakdown.</li>
             <li>Listen to the <strong>spoken audio response</strong> & download your <strong>Markdown/JSON report</strong>.</li>

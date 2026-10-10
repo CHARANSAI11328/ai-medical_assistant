@@ -15,7 +15,7 @@ render_header()
 lang = render_language_selector()
 
 st.title("🔬 Medical Image Analysis")
-st.markdown("Upload a medical radiograph or photograph, or select a judge walkthrough demo image below.")
+st.markdown("Upload a medical radiograph or photograph, or select a sample clinical scan below for instant analysis.")
 
 # 1. Image Upload & Selection
 image, img_name, selected_modality = render_image_uploader()

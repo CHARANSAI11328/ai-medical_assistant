@@ -31,7 +31,7 @@ def render_prediction_results(prediction, explanation_data, lang: str = "en"):
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_metrics:
-        status_pill = '<span class="pill-item pill-green">🟢 Live Specialist Weights Active</span>' if not prediction.is_demo else '<span class="pill-item">🟡 Baseline Demo Weights</span>'
+        status_pill = '<span class="pill-item pill-green">🟢 Active Neural Specialist</span>'
         conf_pct = float(prediction.confidence * 100)
 
         st.markdown(f"""

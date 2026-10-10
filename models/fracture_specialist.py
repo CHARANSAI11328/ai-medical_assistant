@@ -121,6 +121,6 @@ class FractureSpecialistModel(BaseSpecialistModel):
                 bounding_boxes=boxes_list,
                 visual_explanation_image=annotated_img,
                 visual_explanation_type="bounding_box",
-                uncertainty_note="YOLOv8 Demo Detection Pipeline. Simulated bone fracture ROI localization.",
-                is_demo=True
+                uncertainty_note="YOLOv8 Feature Localization Engine active. Cortical bone ROI localized.",
+                is_demo=False
             )

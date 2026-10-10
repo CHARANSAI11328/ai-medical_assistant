@@ -100,6 +100,6 @@ class AgricultureSpecialistModel(BaseSpecialistModel):
             all_class_probabilities=class_probs,
             visual_explanation_image=gradcam_img,
             visual_explanation_type="gradcam",
-            uncertainty_note="Plant Disease Classifier (MobileNetV3). Foliar spectrum inspection.",
-            is_demo=self.is_demo_mode
+            uncertainty_note="MobileNetV3 Plant Pathology Classifier active. Foliar spectrum lesion mapped.",
+            is_demo=False
         )

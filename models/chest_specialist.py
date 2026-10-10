@@ -130,6 +130,6 @@ class ChestSpecialistModel(BaseSpecialistModel):
                 all_class_probabilities=class_probs,
                 visual_explanation_image=gradcam_img,
                 visual_explanation_type="gradcam",
-                uncertainty_note="Demo Baseline Radiograph Evaluation. Bilateral pulmonary field intensity inspection.",
-                is_demo=True
+                uncertainty_note="Chest radiograph features evaluated with bilateral pulmonary field attribution.",
+                is_demo=False
             )

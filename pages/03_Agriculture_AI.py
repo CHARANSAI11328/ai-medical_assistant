@@ -19,8 +19,8 @@ with col_upload:
     uploaded_file = st.file_uploader("Upload Crop / Leaf Photo (JPG, PNG)", type=["jpg", "jpeg", "png"])
 
 with col_demo:
-    st.markdown("**or Use Demo Leaf Image:**")
-    if st.button("🌱 Load Demo Rust Leaf"):
+    st.markdown("**or Select Sample Foliar Leaf:**")
+    if st.button("🌱 Load Sample Rust Leaf"):
         img_leaf = Image.new("RGB", (300, 300), color=(240, 240, 240))
         draw = ImageDraw.Draw(img_leaf)
         draw.ellipse([60, 40, 240, 260], fill=(40, 160, 50), outline=(20, 90, 30), width=3)

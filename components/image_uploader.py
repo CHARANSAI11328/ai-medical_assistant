@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image, ImageDraw
 
 def generate_sample_demo_images() -> dict:
-    """Generates synthetic authorized demo images for judge walkthroughs."""
+    """Generates synthetic authorized clinical sample images for walkthroughs."""
     sample_images = {}
 
     # 1. Sample Retinal Fundus (Red circular gradient)
@@ -10,7 +10,7 @@ def generate_sample_demo_images() -> dict:
     draw = ImageDraw.Draw(img_eye)
     draw.ellipse([30, 30, 270, 270], fill=(190, 45, 20), outline=(240, 200, 80), width=4)
     draw.ellipse([180, 120, 230, 170], fill=(255, 240, 180))  # Optic disc
-    sample_images["Eye (Retinal Fundus - Demo)"] = img_eye
+    sample_images["Ocular Retinal Scan"] = img_eye
 
     # 2. Sample Chest X-Ray (Bilateral pulmonary field grayscale)
     img_chest = Image.new("RGB", (300, 300), color=(40, 40, 45))
@@ -18,33 +18,33 @@ def generate_sample_demo_images() -> dict:
     draw.ellipse([40, 50, 130, 240], fill=(160, 160, 170))
     draw.ellipse([170, 50, 260, 240], fill=(150, 150, 160))
     draw.rectangle([130, 100, 170, 210], fill=(90, 90, 100))  # Cardiac silhouette
-    sample_images["Chest X-Ray (Pneumonia - Demo)"] = img_chest
+    sample_images["Chest Radiograph"] = img_chest
 
     # 3. Sample Bone Fracture Radiograph
     img_bone = Image.new("RGB", (250, 350), color=(30, 30, 35))
     draw = ImageDraw.Draw(img_bone)
     draw.rectangle([100, 30, 150, 320], fill=(210, 210, 220))  # Bone shaft
     draw.line([100, 160, 150, 175], fill=(20, 20, 25), width=4)  # Fracture line
-    sample_images["Bone X-Ray (Fracture - Demo)"] = img_bone
+    sample_images["Bone Radiograph"] = img_bone
 
     # 4. Sample Agriculture Crop Leaf
     img_leaf = Image.new("RGB", (300, 300), color=(240, 240, 240))
     draw = ImageDraw.Draw(img_leaf)
     draw.ellipse([60, 40, 240, 260], fill=(40, 160, 50), outline=(20, 90, 30), width=3)
     draw.ellipse([100, 100, 150, 150], fill=(160, 90, 30))  # Rust lesion spot
-    sample_images["Crop Leaf (Fungal Rust - Demo)"] = img_leaf
+    sample_images["Crop Leaf Pathology"] = img_leaf
 
     return sample_images
 
 def render_image_uploader():
-    """Renders image uploader, modality dropdown, and sample demo image picker."""
-    st.markdown("### 📤 Step 1: Upload Scan or Select Demo Image")
+    """Renders image uploader, modality dropdown, and sample image picker."""
+    st.markdown("### 📤 Step 1: Upload Scan or Select Sample Image")
     
     col_modality, col_upload = st.columns([1, 2])
 
     with col_modality:
         modality_options = {
-            "Auto-Detect": "auto",
+            "Auto-Detect Modality": "auto",
             "Retinal / Eye Photograph": "eye",
             "Chest X-Ray": "chest",
             "Bone Radiograph (X-Ray)": "fracture",
@@ -66,16 +66,16 @@ def render_image_uploader():
             help="Upload a clear medical scan or plant leaf photo."
         )
 
-    st.markdown("**or Select Judge Walkthrough Demo Image:**")
+    st.markdown("**or Select Sample Scan for Instant Analysis:**")
     demo_cols = st.columns(len(sample_images))
 
     for idx, (name, img) in enumerate(sample_images.items()):
         with demo_cols[idx]:
-            st.image(img, use_container_width=True, caption=name.split(' ')[0])
-            if st.button(f"Use Demo {idx+1}", key=f"demo_btn_{idx}"):
+            st.image(img, use_container_width=True, caption=name)
+            if st.button(f"Analyze Sample {idx+1}", key=f"demo_btn_{idx}"):
                 st.session_state.active_image = img
                 st.session_state.active_image_name = name
-                # Clear old predictions when new demo is clicked
+                # Clear old predictions when new sample is clicked
                 st.session_state.pop("active_prediction", None)
                 st.session_state.pop("active_explanation", None)
 
