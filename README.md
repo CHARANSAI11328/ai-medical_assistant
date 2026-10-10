@@ -1,5 +1,11 @@
 # 🏥 MediScope AI — AI-Powered Multi-Specialist Medical Diagnostic Assistant
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](http://localhost:8501)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+### 🌐 **[👉 CLICK HERE TO OPEN LIVE WEBSITE APP 👈](http://localhost:8501)**
+
 **MediScope AI** is a multi-specialist computer vision and conversational AI research prototype built to assist users with medical image analysis, plain-language educational guidance, and multilingual symptom support.
 
 ---
