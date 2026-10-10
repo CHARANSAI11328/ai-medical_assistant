@@ -1,0 +1,42 @@
+app:
+  name: "MediScope AI"
+  tagline: "AI-Powered Multi-Specialist Medical Diagnostic & Educational Assistant"
+  version: "1.0.0"
+  institution: "Medical AI Research Prototype"
+
+default_language: "en"
+supported_languages:
+  en: "English"
+  hi: "Hindi (हिंदी)"
+  te: "Telugu (తెలుగు)"
+
+gemini:
+  model_name: "gemini-2.5-flash"
+  fallback_model: "gemini-1.5-flash"
+  temperature: 0.2
+  max_output_tokens: 1500
+
+triage:
+  emergency_keywords:
+    - "chest pain"
+    - "difficulty breathing"
+    - "shortness of breath"
+    - "stroke"
+    - "facial numbness"
+    - "slurred speech"
+    - "uncontrolled bleeding"
+    - "loss of consciousness"
+    - "severe allergic reaction"
+    - "anaphylaxis"
+    - " छाती में दर्द"
+    - "सांस लेने में तकलीफ"
+    - "ఛాతీ నొప్పి"
+    - "శ్వాస తీసుకోవడంలో ఇబ్బంది"
+
+safety_notice: |
+  **MediScope AI** provides AI-assisted educational information and research analysis, NOT a medical diagnosis.
+  Model predictions may be incorrect. Do not use this application to delay professional medical care or emergency services.
+
+privacy:
+  retain_images: false
+  anonymize_metadata: true

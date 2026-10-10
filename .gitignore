@@ -1,0 +1,17 @@
+.venv/
+Lib/
+Scripts/
+share/
+etc/
+Include/
+tcl/
+__pycache__/
+*.pyc
+.env
+runs/
+datasets/sample_data/
+*.pt
+*.pth
+*.onnx
+.pytest_cache/
+.streamlit/secrets.toml

