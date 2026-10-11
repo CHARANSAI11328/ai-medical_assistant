@@ -1,6 +1,6 @@
 [client]
 toolbarMode = "developer"
-showErrorDetails = true
+showErrorDetails = "full"
 
 [browser]
 gatherUsageStats = false
