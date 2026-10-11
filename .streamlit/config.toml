@@ -1,14 +1,14 @@
-[client]
-toolbarMode = "developer"
-showErrorDetails = "full"
+[server]
+headless = true
+enableCORS = false
+enableXsrfProtection = false
 
 [browser]
 gatherUsageStats = false
 
-[server]
-headless = false
-port = 8501
-address = "localhost"
+[client]
+toolbarMode = "developer"
+showErrorDetails = "full"
 
 [theme]
 base = "dark"

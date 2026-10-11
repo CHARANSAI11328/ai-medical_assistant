@@ -36,7 +36,7 @@ def plot_confusion_matrix(tp: int, fp: int, fn: int, tn: int, title: str = "Mode
     ax.tick_params(colors="#cbd5e1", labelsize=9)
 
     for spine in ax.spines.values():
-        spine.set_color('rgba(255, 255, 255, 0.1)')
+        spine.set_color('#334155')
         spine.set_linewidth(1)
 
     plt.tight_layout()
@@ -56,7 +56,7 @@ def plot_metric_bar_chart(metrics: dict, title: str = "Evaluation Performance Me
     values = [v * 100 if v <= 1.0 else v for v in metrics.values()]
 
     colors = ["#38bdf8", "#818cf8", "#34d399", "#c084fc", "#f43f5e"][:len(names)]
-    bars = ax.bar(names, values, color=colors, width=0.52, edgecolor="rgba(255, 255, 255, 0.15)", linewidth=1)
+    bars = ax.bar(names, values, color=colors, width=0.52, edgecolor="#475569", linewidth=1)
     
     ax.set_ylim(0, 115)
     ax.set_ylabel("Score (%)", color="#94a3b8", fontsize=9, fontweight="bold")
@@ -65,7 +65,7 @@ def plot_metric_bar_chart(metrics: dict, title: str = "Evaluation Performance Me
     ax.grid(axis='y', linestyle='--', alpha=0.15, color='#94a3b8')
 
     for spine in ax.spines.values():
-        spine.set_color('rgba(255, 255, 255, 0.08)')
+        spine.set_color('#334155')
 
     for bar in bars:
         height = bar.get_height()
