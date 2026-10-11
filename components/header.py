@@ -459,10 +459,9 @@ def render_header():
 
         /* Audio Player Styling */
         audio {
-            border-radius: 12px;
-            filter: invert(0.88) hue-rotate(180deg);
             width: 100%;
-            margin-top: 6px;
+            margin-top: 8px;
+            border-radius: 10px;
         }
         </style>
     """, unsafe_allow_html=True)

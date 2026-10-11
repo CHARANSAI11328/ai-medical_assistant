@@ -7,7 +7,7 @@ def render_chatbot(current_prediction=None, lang: str = "en"):
     """
     Renders enterprise-grade interactive medical conversational assistant chat UI
     with active clinical scan context, quick question chips, high-contrast messages,
-    and voice synthesis.
+    and glitch-free persistent voice synthesis.
     """
     # 1. Top Control Bar
     c_title, c_status, c_reset = st.columns([3, 2, 1])
@@ -40,8 +40,10 @@ def render_chatbot(current_prediction=None, lang: str = "en"):
 
     with c_reset:
         if st.button("🔄 Clear Chat", key="clear_chat_btn", use_container_width=True):
+            welcome_text = "Hello! I am your MediScope AI Medical Information Assistant. How can I help you with medical concepts, symptoms, or scan results today?"
+            welcome_audio = SpeechService.text_to_speech(welcome_text, lang)
             st.session_state.chat_messages = [
-                {"role": "assistant", "content": "Hello! I am your MediScope AI Medical Information Assistant. How can I help you with medical concepts, symptoms, or scan results today?"}
+                {"role": "assistant", "content": welcome_text, "audio_bytes": welcome_audio}
             ]
             st.rerun()
 
@@ -91,18 +93,50 @@ def render_chatbot(current_prediction=None, lang: str = "en"):
 
     # Initialize messages
     if "chat_messages" not in st.session_state:
+        welcome_text = "Hello! I am your MediScope AI Medical Information Assistant. How can I help you with medical concepts, symptoms, or scan results today?"
+        welcome_audio = SpeechService.text_to_speech(welcome_text, lang)
         st.session_state.chat_messages = [
-            {"role": "assistant", "content": "Hello! I am your MediScope AI Medical Information Assistant. How can I help you with medical concepts, symptoms, or scan results today?"}
+            {"role": "assistant", "content": welcome_text, "audio_bytes": welcome_audio}
         ]
 
-    # Render previous messages
+    # Render previous messages with persistent audio
     st.markdown("""<div style="margin: 16px 0;"></div>""", unsafe_allow_html=True)
     
-    for msg in st.session_state.chat_messages:
+    for idx, msg in enumerate(st.session_state.chat_messages):
         role = msg["role"]
         avatar = "🏥" if role == "assistant" else "👤"
         with st.chat_message(role, avatar=avatar):
-            st.markdown(msg["content"])
+            if msg.get("is_emergency"):
+                st.markdown(f"""
+                <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(185, 28, 28, 0.15) 100%);
+                            border: 1px solid rgba(239, 68, 68, 0.5); border-left: 5px solid #ef4444; border-radius: 12px;
+                            padding: 16px 20px; margin-bottom: 12px; box-shadow: 0 0 25px rgba(239, 68, 68, 0.3);">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        <span style="font-size: 1.3rem;">🚨</span>
+                        <strong style="color: #fca5a5; font-size: 1.05rem;">URGENT CLINICAL TRIAGE ALERT</strong>
+                    </div>
+                    <div style="color: #fef2f2; line-height: 1.6; font-size: 0.95rem;">{msg["content"]}</div>
+                    <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(239, 68, 68, 0.3);
+                                display: flex; gap: 12px; font-weight: 700; font-size: 0.88rem; color: #fecaca;">
+                        <span>📞 Emergency US: 911</span>
+                        <span>·</span>
+                        <span>📞 Emergency EU: 112</span>
+                        <span>·</span>
+                        <span>📞 Emergency India: 108 / 102</span>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.markdown(msg["content"])
+
+            # Render persistent voice audio player for assistant messages
+            if role == "assistant" and msg.get("audio_bytes"):
+                st.markdown("""
+                <div style="margin-top: 8px; color: #94a3b8; font-size: 0.78rem; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                    <span>🔊</span> <span>Spoken Clinical Briefing:</span>
+                </div>
+                """, unsafe_allow_html=True)
+                st.audio(msg["audio_bytes"], format="audio/mp3")
 
     # Chat input
     user_input = st.chat_input("Ask a medical or symptom question...")
@@ -113,8 +147,6 @@ def render_chatbot(current_prediction=None, lang: str = "en"):
     if message_to_send:
         # Append User Message
         st.session_state.chat_messages.append({"role": "user", "content": message_to_send})
-        with st.chat_message("user", avatar="👤"):
-            st.markdown(message_to_send)
 
         # Process message with spinner
         orchestrator = MedicalAssistantOrchestrator()
@@ -129,40 +161,15 @@ def render_chatbot(current_prediction=None, lang: str = "en"):
         response_text = result["response"]
         is_emergency = result.get("is_emergency", False)
 
-        # Append Assistant Response
-        st.session_state.chat_messages.append({"role": "assistant", "content": response_text})
-        with st.chat_message("assistant", avatar="🏥"):
-            if is_emergency:
-                st.markdown(f"""
-                <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(185, 28, 28, 0.15) 100%);
-                            border: 1px solid rgba(239, 68, 68, 0.5); border-left: 5px solid #ef4444; border-radius: 12px;
-                            padding: 16px 20px; margin-bottom: 12px; box-shadow: 0 0 25px rgba(239, 68, 68, 0.3);">
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                        <span style="font-size: 1.3rem;">🚨</span>
-                        <strong style="color: #fca5a5; font-size: 1.05rem;">URGENT CLINICAL TRIAGE ALERT</strong>
-                    </div>
-                    <div style="color: #fef2f2; line-height: 1.6; font-size: 0.95rem;">{response_text}</div>
-                    <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(239, 68, 68, 0.3);
-                                display: flex; gap: 12px; font-weight: 700; font-size: 0.88rem; color: #fecaca;">
-                        <span>📞 Emergency US: 911</span>
-                        <span>·</span>
-                        <span>📞 Emergency EU: 112</span>
-                        <span>·</span>
-                        <span>📞 Emergency India: 108 / 102</span>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-            else:
-                st.markdown(response_text)
+        # Generate clean, sanitized, glitch-free audio
+        audio_bytes = SpeechService.text_to_speech(response_text, lang)
 
-            # Audio Playback
-            audio_bytes = SpeechService.text_to_speech(response_text, lang)
-            if audio_bytes:
-                st.markdown("""
-                <div style="margin-top: 10px; color: #94a3b8; font-size: 0.78rem; font-weight: 600;">
-                    🔊 Spoken Audio Explanation:
-                </div>
-                """, unsafe_allow_html=True)
-                st.audio(audio_bytes, format="audio/mp3")
+        # Append Assistant Response WITH cached audio in message state
+        st.session_state.chat_messages.append({
+            "role": "assistant",
+            "content": response_text,
+            "is_emergency": is_emergency,
+            "audio_bytes": audio_bytes
+        })
 
         st.rerun()
