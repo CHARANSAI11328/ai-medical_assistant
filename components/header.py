@@ -11,21 +11,56 @@ def render_header():
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
-        /* 1. Complete Suppression of Streamlit Chrome & White Bar */
-        header[data-testid="stHeader"],
-        #MainMenu,
-        footer,
-        [data-testid="stToolbar"],
-        [data-testid="stDecoration"],
-        [data-testid="stStatusWidget"],
-        .stDeployButton,
+        /* 1. Sleek Cyber-Dark Styling for Top Header & Menu Bar */
+        header[data-testid="stHeader"] {
+            background: rgba(11, 15, 25, 0.85) !important;
+            backdrop-filter: blur(16px) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+            color: #f8fafc !important;
+            display: flex !important;
+            visibility: visible !important;
+            height: auto !important;
+            z-index: 999990 !important;
+        }
+
+        /* Top Toolbar, Menu Button & Icons */
+        header[data-testid="stHeader"] svg,
+        header[data-testid="stHeader"] button,
+        header[data-testid="stHeader"] a,
+        [data-testid="stToolbar"] button,
+        [data-testid="stToolbar"] a,
+        #MainMenu button,
+        #MainMenu svg {
+            color: #e2e8f0 !important;
+            fill: #e2e8f0 !important;
+            transition: all 0.2s ease !important;
+        }
+
+        header[data-testid="stHeader"] button:hover,
+        header[data-testid="stHeader"] a:hover,
+        [data-testid="stToolbar"] button:hover,
+        #MainMenu button:hover {
+            color: #38bdf8 !important;
+            fill: #38bdf8 !important;
+            background: rgba(56, 189, 248, 0.12) !important;
+            border-radius: 8px !important;
+        }
+
+        /* Sidebar Collapsed/Expand Control Button */
         div[data-testid="stSidebarCollapsedControl"],
-        .viewerBadge_container__r5tak,
-        [data-testid="manage-app-button"],
-        .stAppDeployButton {
-            display: none !important;
-            visibility: hidden !important;
-            height: 0px !important;
+        div[data-testid="collapsedControl"] {
+            display: block !important;
+            visibility: visible !important;
+            z-index: 999999 !important;
+        }
+
+        div[data-testid="stSidebarCollapsedControl"] button,
+        div[data-testid="collapsedControl"] button {
+            background: rgba(15, 23, 42, 0.8) !important;
+            border: 1px solid rgba(56, 189, 248, 0.35) !important;
+            color: #38bdf8 !important;
+            border-radius: 8px !important;
         }
 
         /* 2. Global Canvas & Typography */
@@ -61,7 +96,7 @@ def render_header():
         }
 
         .block-container {
-            padding: 1.5rem 2.2rem 3rem !important;
+            padding: 4.2rem 2.2rem 3rem !important;
             max-width: 1400px !important;
         }
 

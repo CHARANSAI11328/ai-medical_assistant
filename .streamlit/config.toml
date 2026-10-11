@@ -1,8 +1,12 @@
+[client]
+toolbarMode = "developer"
+showErrorDetails = true
+
 [browser]
 gatherUsageStats = false
 
 [server]
-headless = true
+headless = false
 port = 8501
 address = "localhost"
 
